@@ -2,7 +2,8 @@ import React, { useRef, useState } from "react";
 import { AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
 import Card from "./Card";
 import styled from "styled-components";
-export default function CardSlider({ data, title }) {
+
+export default React.memo(function CardSlider({ data, title }) {
   const [showControls, setShowControls] = useState(false);
   const [sliderPosition, setSliderPosition] = useState(false);
   const listRef = useRef();
@@ -25,8 +26,8 @@ export default function CardSlider({ data, title }) {
       onMouseEnter={() => setShowControls(true)}
       onMouseLeave={() => setShowControls(false)}
     >
-      <h1>{title}</h1>
       <div className="wrapper">
+        <h1>{title}</h1>
         <div
           className={`slider-action left ${
             !showControls ? "none" : ""
@@ -53,7 +54,7 @@ export default function CardSlider({ data, title }) {
       </div>
     </Container>
   );
-}
+});
 
 const Container = styled.div`
   gap: 1rem;
