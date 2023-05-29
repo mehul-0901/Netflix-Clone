@@ -2,14 +2,13 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import video from "../assets/video.mp4";
-import { fetchMovies } from "../store";
 import { IoPlayCircleSharp } from "react-icons/io5";
 import { AiOutlinePlus } from "react-icons/ai";
 import { RiThumbUpFill, RiThumbDownFill } from "react-icons/ri";
 import { BiChevronDown } from "react-icons/bi";
 import { BsCheck } from "react-icons/bs";
 
-export default function Card({ movieData, isLinked = false }) {
+export default React.memo(function Card({ movieData, isLinked = false }) {
   const [isHovered, setIsHovered] = useState(false);
   const navigate = useNavigate();
   return (
@@ -73,7 +72,7 @@ export default function Card({ movieData, isLinked = false }) {
       )}
     </Container>
   );
-}
+});
 const Container = styled.div`
   max-width: 230px;
   width: 230px;
