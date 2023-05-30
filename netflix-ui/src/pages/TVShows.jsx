@@ -12,7 +12,6 @@ import SelectGenre from "../components/SelectGenre";
 
 export default function TVShows() {
   const [isScrolled, setIsScrolled] = useState(false);
-  const navigate = useNavigate();
   const genresLoaded = useSelector((state) => state.netflix.genresLoaded);
   const movies = useSelector((state) => state.netflix.movies);
   const genres = useSelector((state) => state.netflix.genres);
@@ -24,7 +23,7 @@ export default function TVShows() {
 
   useEffect(() => {
     if (genresLoaded) dispatch(fetchMovies({ type: "tv" }));
-  },[genresLoaded]);
+  }, [genresLoaded]);
 
   window.onscroll = () => {
     setIsScrolled(window.pageYOffset === 0 ? false : true);
@@ -41,7 +40,7 @@ export default function TVShows() {
         <Navbar isScrolled={isScrolled} />
       </div>
       <div className="data">
-      <SelectGenre genres={genres} type="tv"/>
+        <SelectGenre genres={genres} type="tv" />
         {movies.length ? <Slider movies={movies} /> : <NotAvailable />}
       </div>
     </Container>

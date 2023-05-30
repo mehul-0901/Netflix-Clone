@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import video from "../assets/video.mp4";
 import { IoPlayCircleSharp } from "react-icons/io5";
 import { AiOutlinePlus } from "react-icons/ai";
@@ -11,10 +12,12 @@ import { onAuthStateChanged } from "firebase/auth";
 import { firebaseAuth } from "../utils/firebase-config";
 import { URL } from "../utils/constants";
 import axios from "axios";
+import { removeFromLikedMovies } from "../store";
 
-export default React.memo(function Card({ movieData, isLiked = false }) {
+export default React.memo(function Card({ index, movieData, isLiked = false }) {
   const [isHovered, setIsHovered] = useState(false);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const [email, setEmail] = useState(undefined);
 
@@ -25,7 +28,6 @@ export default React.memo(function Card({ movieData, isLiked = false }) {
 
   const addToList = async () => {
     try {
-      console.log("Inside Liked List");
       await axios.post(`${URL}/api/user/add`, { email, data: movieData });
     } catch (err) {
       console.log(err);
@@ -71,7 +73,14 @@ export default React.memo(function Card({ movieData, isLiked = false }) {
                 <RiThumbUpFill title="Like" />
                 <RiThumbDownFill title="Dislike" />
                 {isLiked ? (
-                  <BsCheck title="Remove From List" />
+                  <BsCheck
+                    title="Remove from List"
+                    onClick={() =>
+                      dispatch(
+                        removeFromLikedMovies({ movieId: movieData.id, email })
+                      )
+                    }
+                  />
                 ) : (
                   <AiOutlinePlus title="Add to my list" onClick={addToList} />
                 )}

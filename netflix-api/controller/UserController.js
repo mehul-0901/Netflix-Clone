@@ -34,3 +34,35 @@ module.exports.addToLikedMovies = async (req, res) => {
     return res.json({ msg: "Error adding movie" });
   }
 };
+
+module.exports.removeFromLikedMovies = async (req, res) => {
+  try {
+    const { email, movieId } = req.body;
+    const user = await User.findOne({ email });
+    if (user) {
+      const movies = user.likedMovies;
+      console.log(movies, movieId);
+
+      const movieIndex = movies.findIndex(({ id }) => id === movieId);
+
+      console.log(movieIndex);
+      if (movieIndex === -1)
+        return res.status(400).send({ msg: "Movie not found" });
+      movies.splice(movieIndex, 1);
+      await User.findByIdAndUpdate(
+        user._id,
+        {
+          likedMovies: movies,
+        },
+        { new: true }
+      );
+      return res.json({
+        msg: "Movie successfully removed.",
+        movies: movies,
+      });
+    } else return res.json({ msg: "User with given email not found." });
+  } catch (error) {
+    console.log("Inside UserController, catch", error);
+    return res.json({ msg: "Error removing movie to the liked list" });
+  }
+};
