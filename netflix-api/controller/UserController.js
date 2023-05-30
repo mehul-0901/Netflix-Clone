@@ -3,9 +3,7 @@ const User = require("../models/UserModel");
 module.exports.getLikedMovies = async (req, res) => {
   try {
     const { email } = req.params;
-    console.log("dhdgd", email);
     const user = await await User.findOne({ email });
-    console.log("dhdgrdhsdgssdfg", user);
     if (user) {
       return res.json({ msg: "success", movies: user.likedMovies });
     } else return res.json({ msg: "User with given email not found." });

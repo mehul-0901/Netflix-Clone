@@ -12,7 +12,7 @@ import SelectGenre from "../components/SelectGenre";
 
 export default function Movies() {
   const [isScrolled, setIsScrolled] = useState(false);
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const genresLoaded = useSelector((state) => state.netflix.genresLoaded);
   const movies = useSelector((state) => state.netflix.movies);
   const genres = useSelector((state) => state.netflix.genres);

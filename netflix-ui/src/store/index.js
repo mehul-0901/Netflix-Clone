@@ -78,7 +78,6 @@ export const fetchDataByGenre = createAsyncThunk(
 export const getUserLikedMovies = createAsyncThunk(
   "netflix/getLiked",
   async (email) => {
-    console.log("sdsfjgdfhfjfgh");
     const {
       data: { movies },
     } = await axios.get(`${URL}/api/user/liked/${email}`);
