@@ -24,7 +24,7 @@ export default function Movies() {
 
   useEffect(() => {
     if (genresLoaded) dispatch(fetchMovies({ type: "movie" }));
-  },[genresLoaded]);
+  }, [genresLoaded]);
 
   window.onscroll = () => {
     setIsScrolled(window.pageYOffset === 0 ? false : true);
@@ -41,7 +41,7 @@ export default function Movies() {
         <Navbar isScrolled={isScrolled} />
       </div>
       <div className="data">
-      <SelectGenre genres={genres} type="movie"/>
+        <SelectGenre genres={genres} type="movie" />
         {movies.length ? <Slider movies={movies} /> : <NotAvailable />}
       </div>
     </Container>

@@ -12,10 +12,11 @@ import { firebaseAuth } from "../utils/firebase-config";
 import { URL } from "../utils/constants";
 import axios from "axios";
 
-export default React.memo(function Card({ movieData, isLinked = false }) {
+export default React.memo(function Card({ movieData, isLiked = false }) {
   const [isHovered, setIsHovered] = useState(false);
-  const [email, setEmail] = useState(undefined);
   const navigate = useNavigate();
+
+  const [email, setEmail] = useState(undefined);
 
   onAuthStateChanged(firebaseAuth, (currentUser) => {
     if (currentUser) setEmail(currentUser.email);
@@ -69,7 +70,7 @@ export default React.memo(function Card({ movieData, isLinked = false }) {
                 ></IoPlayCircleSharp>
                 <RiThumbUpFill title="Like" />
                 <RiThumbDownFill title="Dislike" />
-                {isLinked ? (
+                {isLiked ? (
                   <BsCheck title="Remove From List" />
                 ) : (
                   <AiOutlinePlus title="Add to my list" onClick={addToList} />

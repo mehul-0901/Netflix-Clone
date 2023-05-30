@@ -1,5 +1,19 @@
 const User = require("../models/UserModel");
 
+module.exports.getLikedMovies = async (req, res) => {
+  try {
+    const { email } = req.params;
+    console.log("dhdgd", email);
+    const user = await await User.findOne({ email });
+    console.log("dhdgrdhsdgssdfg", user);
+    if (user) {
+      return res.json({ msg: "success", movies: user.likedMovies });
+    } else return res.json({ msg: "User with given email not found." });
+  } catch (error) {
+    return res.json({ msg: "Error fetching movies." });
+  }
+};
+
 module.exports.addToLikedMovies = async (req, res) => {
   try {
     const { email, data } = req.body;
@@ -20,17 +34,5 @@ module.exports.addToLikedMovies = async (req, res) => {
     return res.json({ msg: "Movie added successfully" });
   } catch (err) {
     return res.json({ msg: "Error adding movie" });
-  }
-};
-
-module.exports.getLikedMovies = async (req, res) => {
-  try {
-    const { email } = req.body;
-    const user = await User.findOne({ email });
-    if (user) {
-      res.json({ msg: "Success", movies: user.likedMovies });
-    } else return res.json({ msg: "User with given email not found." });
-  } catch (err) {
-    return res.json({ msg: "Error fetching movie" });
   }
 };

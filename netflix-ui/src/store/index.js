@@ -4,7 +4,7 @@ import {
   createSlice,
 } from "@reduxjs/toolkit";
 import axios from "axios";
-import { TMBD_BASE_URL, API_KEY } from "../utils/constants";
+import { TMBD_BASE_URL, API_KEY, URL } from "../utils/constants";
 
 const initialState = {
   movies: [],
@@ -75,6 +75,17 @@ export const fetchDataByGenre = createAsyncThunk(
   }
 );
 
+export const getUserLikedMovies = createAsyncThunk(
+  "netflix/getLiked",
+  async (email) => {
+    console.log("sdsfjgdfhfjfgh");
+    const {
+      data: { movies },
+    } = await axios.get(`${URL}/api/user/liked/${email}`);
+    return movies;
+  }
+);
+
 const NetflixSlice = createSlice({
   name: "Netflix",
   initialState,
@@ -88,6 +99,10 @@ const NetflixSlice = createSlice({
     });
 
     builder.addCase(fetchDataByGenre.fulfilled, (state, action) => {
+      state.movies = action.payload;
+    });
+
+    builder.addCase(getUserLikedMovies.fulfilled, (state, action) => {
       state.movies = action.payload;
     });
   },
